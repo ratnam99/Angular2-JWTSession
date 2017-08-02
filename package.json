@@ -15,7 +15,9 @@
     "angular",
     "angular2",
     "jwt",
-    "authentication"
+    "authentication",
+    "keep me logged in",
+    "angular jwt session"
   ],
   "author": "ratnam",
   "license": "MIT",
