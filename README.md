@@ -18,7 +18,7 @@
     - [Using the Observable Token Stream](#using-the-observable-token-stream)
     - [Using JwtHelper in Components](#using-jwthelper-in-components)
  - [Checking Authentication to Hide/Show Elements and Handle Routing](#checking-authentication-to-hideshow-elements-and-handle-routing)
- - ["Keep me logged in"](#"Keep me logged in")
+ - [Keep me logged in](#Keep me logged in)
  - [Issue Reporting](#issue-reporting)
  - [Author](#author)
  - [License](#license)
@@ -324,7 +324,7 @@ export const routes: RouterConfig = [
 ```
 
 
-## "Keep me logged in"
+## Keep me logged in
 
 Once you become aware of the working of this library and how to use it, it becomes very simple to implement the "Keep me logged in" or "stay signed in" feature in your web app.
 
