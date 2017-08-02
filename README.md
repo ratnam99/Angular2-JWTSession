@@ -18,10 +18,7 @@
     - [Using the Observable Token Stream](#using-the-observable-token-stream)
     - [Using JwtHelper in Components](#using-jwthelper-in-components)
  - [Checking Authentication to Hide/Show Elements and Handle Routing](#checking-authentication-to-hideshow-elements-and-handle-routing)
- - [Contributing](#contributing)
- - [Development](#development)
- - [What is Auth0?](#what-is-auth0)
- - [Create a free account in Auth0](#create-a-free-account-in-auth0)
+ - ["Keep me logged in"](#"Keep me logged in")
  - [Issue Reporting](#issue-reporting)
  - [Author](#author)
  - [License](#license)
@@ -327,19 +324,29 @@ export const routes: RouterConfig = [
 ```
 
 
-## Contributing
+## "Keep me logged in"
 
-Pull requests are welcome!
+Once you become aware of the working of this library and how to use it, it becomes very simple to implement the "Keep me logged in" or "stay signed in" feature in your web app.
+
+For this, I assume you have done all the above configurations and have generated JWTs. To implement this feature, you need to add a checkbox to your login page and model it with a boolean "rememberMe" which is by default false. On checking the checkbox this value changes to true and on unchecking the checkbox it becomes false. This boolean is to be stored in local storage when login button is clicked.
+
+Now comes the logic, when the login button is pressed and rememberMe is true (i.e. checkbox is checked) the JWT is stored in the local storage using `localStorage.setItem(JWT)`. And if the login button is pressed and rememberMe is false (i.e. checkbox is not checked or unchecked) the JWT is stored in the sessionStorage using `sessionStorage.setItem(JWT)`.
+
+All the other authentications, comparisons during naviagtion or during sending requests are handled by JWTHelper, AuthHttp and AuthConfig.
+
+The "Keep me logged in" feature becomes very simple to implement using this library. 
+
+
 
 
 ## Issue Reporting
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker.
+If you have found a bug or if you have a feature request, please report them at this [repository](https://github.com/ratnam99/Angular2-JWTSession.git) issues section. Please do not report security vulnerabilities on the public GitHub issue tracker.
 
 
 ## Author
 
-[ratnam](https://github.com/ratnam99) (Software Developer at [Geekyants](https://geekyants.com/))
+[Kumar Ratnam Pandey](https://github.com/ratnam99) (Software Developer at [Geekyants](https://geekyants.com/))
 
 
 ## License
