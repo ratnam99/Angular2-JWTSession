@@ -1,6 +1,6 @@
 {
   "name": "angular2-jwt-session",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Helper library for handling JWTs in Angular 2+",
   "repository": {
     "url": "https://github.com/ratnam99/Angular2-JWTSession.git"
