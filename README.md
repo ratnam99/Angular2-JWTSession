@@ -1,5 +1,5 @@
 # angular2-jwt-session
-[![Build Status](https://travis-ci.org/auth0/angular2-jwt-session.svg?branch=master)]
+[![Build Status](https://travis-ci.org/ratnam99/Angular2-JWTSession.svg?branch=master)]
 [![npm version](https://img.shields.io/npm/v/angular2-jwt-session.svg)](https://www.npmjs.com/package/angular2-jwt-session) [![license](https://img.shields.io/npm/l/angular2-jwt-session.svg)]
 
 **angular2-jwt-session** is a helper library for working with [JWTs](http://jwt.io/introduction) in your Angular 2 applications. Also it can be used to implement "Keep me logged in feature" with the help of local storage and session storage
@@ -32,7 +32,6 @@
 
 This library does not have any functionality for (or opinion about) implementing user authentication and retrieving JWTs to begin with. Those details will vary depending on your setup, but in most cases, you will use a regular HTTP request to authenticate your users and then save their JWTs in local storage or session storage or in a cookie if successful.
 
-For more on implementing authentication endpoints, see this tutorial for an [example using HapiJS](https://auth0.com/blog/2016/03/07/hapijs-authentication-secure-your-api-with-json-web-tokens/).
 
 
 ## Key Features
@@ -41,6 +40,7 @@ For more on implementing authentication endpoints, see this tutorial for an [exa
 * **Decode a JWT** from your Angular 2 app
 * Check the **expiration date** of the JWT
 * Conditionally allow **route navigation** based on JWT status
+* Implement "Keep me logged in" feature
 
 
 ## Installation
@@ -332,39 +332,16 @@ export const routes: RouterConfig = [
 Pull requests are welcome!
 
 
-## Development
-
-Use `npm run dev` to compile and watch for changes.
-
-
-## What is Auth0?
-
-Auth0 helps you to:
-
-* Add authentication with [multiple authentication sources](https://docs.auth0.com/identityproviders), either social like **Google, Facebook, Microsoft Account, LinkedIn, GitHub, Twitter, Box, Salesforce, among others**, or enterprise identity systems like **Windows Azure AD, Google Apps, Active Directory, ADFS or any SAML Identity Provider**.
-* Add authentication through more traditional **[username/password databases](https://docs.auth0.com/mysql-connection-tutorial)**.
-* Add support for **[linking different user accounts](https://docs.auth0.com/link-accounts)** with the same user.
-* Support for generating signed [Json Web Tokens](https://docs.auth0.com/jwt) to call your APIs and **flow the user identity** securely.
-* Analytics of how, when and where users are logging in.
-* Pull data from other sources and add it to the user profile, through [JavaScript rules](https://docs.auth0.com/rules).
-
-
-## Create a free account in Auth0
-
-1. Go to [Auth0](https://auth0.com) and click Sign Up.
-2. Use Google, GitHub or Microsoft Account to login.
-
-
 ## Issue Reporting
 
-If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker. The [Responsible Disclosure Program](https://auth0.com/whitehat) details the procedure for disclosing security issues.
+If you have found a bug or if you have a feature request, please report them at this repository issues section. Please do not report security vulnerabilities on the public GitHub issue tracker.
 
 
 ## Author
 
-[ratnam](https://github.com/ratnam99)
+[ratnam](https://github.com/ratnam99) (Software Developer at [Geekyants](https://geekyants.com/))
 
 
 ## License
 
-This project is licensed under the GeekyAnts Pvt Ltd license.
+This project is licensed under the MIT license.
