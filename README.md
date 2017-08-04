@@ -2,18 +2,17 @@
 [![Build Status](https://travis-ci.org/ratnam99/Angular2-JWTSession.svg?branch=master)]
 [![npm version](https://img.shields.io/npm/v/angular2-jwt-session.svg)](https://www.npmjs.com/package/angular2-jwt-session) [![license](https://img.shields.io/npm/l/angular2-jwt-session.svg)]
 
-**angular2-jwt-session** is a helper library for working with [JWTs](http://jwt.io/introduction) in your Angular 2 applications. Also it can be used to implement "Keep me logged in feature" with the help of local storage and session storage
+**angular2-jwt-session** is a helper library for working with [JWTs](http://jwt.io/introduction) in your Angular 2 applications. Also it can be used to implement "Keep me logged in feature" with the help of local storage and session storage.
 
 
 ## Contents
  - [What is this Library for?](#what-is-this-library-for)
  - [Key Features](#key-features)
- - [Installation](#installation)
- - [Basic Configuration](#basic-configuration)
+ - [How to install?](#how-to-install)
+ - [Configurations Required](#configurations-required)
  - [Sending Authenticated Requests](#sending-authenticated-requests)
  - [Configuration Options](#configuration-options)
     - [Advanced Configuration](#advanced-configuration)
-    - [Configuration for Ionic 2](#configuration-for-ionic-2)
     - [Sending Per-Request Headers](#sending-per-request-headers)
     - [Using the Observable Token Stream](#using-the-observable-token-stream)
     - [Using JwtHelper in Components](#using-jwthelper-in-components)
@@ -30,6 +29,15 @@
 This library does not have any functionality for (or opinion about) implementing user authentication and retrieving JWTs to begin with. Those details will vary depending on your setup, but in most cases, you will use a regular HTTP request to authenticate your users and then save their JWTs in local storage or session storage or in a cookie if successful.
 
 
+The library comes with several helpers that are useful in your Angular 2 apps.
+
+1. `AuthHttp` - allows for individual and explicit authenticated HTTP requests
+2. `tokenNotExpired` - allows you to check whether there is a non-expired JWT in local storage or session storage. This can be used for conditionally showing/hiding elements and stopping navigation to certain routes if the user isn't authenticated
+
+
+This library not only attaches a JWT but also can be easily used to implement "Keep me logged in", "Stay signed in" or "Remember me" feature in your web app.
+
+
 
 ## Key Features
 
@@ -40,19 +48,13 @@ This library does not have any functionality for (or opinion about) implementing
 * Implement "Keep me logged in" feature
 
 
-## Installation
+## How to Install?
 
 ```bash
 npm install angular2-jwt-session --save
 ```
 
-The library comes with several helpers that are useful in your Angular 2 apps.
-
-1. `AuthHttp` - allows for individual and explicit authenticated HTTP requests
-2. `tokenNotExpired` - allows you to check whether there is a non-expired JWT in local storage or session storage. This can be used for conditionally showing/hiding elements and stopping navigation to certain routes if the user isn't authenticated
-
-
-## Basic Configuration
+## Configurations Required
 
 Create a new `auth.module.ts` file with the following code:
 
@@ -89,14 +91,14 @@ import { AuthHttp } from 'angular2-jwt-session';
 // ...
 class App {
 
-  thing: string;
+  someThing: string;
 
   constructor(public authHttp: AuthHttp) {}
 
-  getThing() {
-    this.authHttp.get('http://example.com/api/thing')
+  getSomething() {
+    this.authHttp.get('http://example.com/api/something')
       .subscribe(
-        data => this.thing = data,
+        data => this.someThing = data,
         err => console.log(err),
         () => console.log('Request Complete')
       );
@@ -159,62 +161,26 @@ export function authHttpServiceFactory(http: Http, options: RequestOptions) {
 export class AuthModule {}
 ```
 
-### Configuration for Ionic 2
-
-To configure angular2-jwt-session in Ionic 2 applications, use the factory pattern in your `@NgModule`. Since Ionic 2 provides its own API for accessing local storage pr session storage, configure the `tokenGetter` to use it.
-
-```ts
-import { AuthHttp, AuthConfig } from 'angular2-jwt-session';
-import { Http } from '@angular/http';
-import { Storage } from '@ionic/storage';
-
-let storage = new Storage();
-
-export function getAuthHttp(http) {
-  return new AuthHttp(new AuthConfig({
-    headerPrefix: YOUR_HEADER_PREFIX,
-    noJwtError: true,
-    globalHeaders: [{'Accept': 'application/json'}],
-    tokenGetter: (() => storage.get('token')),
-  }), http);
-}
-
-@NgModule({
-  imports: [
-    IonicModule.forRoot(MyApp),
-  ],
-  providers: [
-    {
-      provide: AuthHttp,
-      useFactory: getAuthHttp,
-      deps: [Http]
-    },
-  // ...
-  bootstrap: [IonicApp],
-  // ...
-})
-```
-
 ### Sending Per-Request Headers
 
 You may also send custom headers on a per-request basis with your `authHttp` request by passing them in an options object.
 
 ```ts
-getThing() {
+getSomeThing() {
   let myHeader = new Headers();
   myHeader.append('Content-Type', 'application/json');
 
-  this.authHttp.get('http://example.com/api/thing', { headers: myHeader })
+  this.authHttp.get('http://example.com/api/something', { headers: myHeader })
     .subscribe(
-      data => this.thing = data,
+      data => this.someThing = data,
       err => console.log(error),
       () => console.log('Request Complete')
     );
 
   // Pass it after the body in a POST request
-  this.authHttp.post('http://example.com/api/thing', 'post body', { headers: myHeader })
+  this.authHttp.post('http://example.com/api/something', 'post body', { headers: myHeader })
     .subscribe(
-      data => this.thing = data,
+      data => this.someThing = data,
       err => console.log(err),
       () => console.log('Request Complete')
     );
@@ -282,8 +248,8 @@ loggedIn() {
 The `loggedIn` method can now be used in views to conditionally hide and show elements.
 
 ```html
- <button id="login" *ngIf="!auth.loggedIn()">Log In</button>
- <button id="logout" *ngIf="auth.loggedIn()">Log Out</button>
+ <button id="login" *ngIf="!authenticate.loggedIn()">Log In</button>
+ <button id="logout" *ngIf="authenticate.loggedIn()">Log Out</button>
 ```
 
 To guard routes that should be limited to authenticated users, set up an `AuthGuard`.
@@ -299,10 +265,10 @@ import { Auth } from './auth.service';
 @Injectable()
 export class AuthGuard implements CanActivate {
 
-  constructor(private auth: Auth, private router: Router) {}
+  constructor(private authenticate: Auth, private router: Router) {}
 
   canActivate() {
-    if(this.auth.loggedIn()) {
+    if(this.authenticate.loggedIn()) {
       return true;
     } else {
       this.router.navigate(['unauthorized']);
